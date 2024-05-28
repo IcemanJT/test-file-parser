@@ -1,4 +1,4 @@
-# test-file-parser
+# text-file-parser
 ### Author: Jeremi Torój
 ### Date: 26-05-2024
 Parser for text files containing data (e.g. CSV, TXT, JSON)
