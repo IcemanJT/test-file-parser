@@ -4,6 +4,8 @@
 from flask import Flask, request, jsonify
 from parser import process_file
 
+ALLOWED_EXTENSIONS = {'txt', 'csv', 'json'}
+
 app = Flask(__name__)
 
 
@@ -24,8 +26,8 @@ def upload_file():
 
 
 def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in {'txt', 'csv', 'json'}
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
