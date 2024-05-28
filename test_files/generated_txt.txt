@@ -1,0 +1,24 @@
+Hello, this is an example text file used to test the parser.
+The purpose of this file is to provide a comprehensive test.
+
+You can reach out to John Doe at john.doe@example.com for more information.
+Alternatively, contact Jane at jane.smith@work-email.org, especially regarding the project deadlines.
+
+For support, please call +48 123-456-7890 during office hours. For after-hours assistance, dial +1 987.654.3210.
+Make sure to document your calls and emails properly.
+
+In addition to these, we have other contacts:
+- Michael's email: michael_brown@company-name.net
+- Samantha's phone: 456-789-1234
+
+We expect the file to contain:
+- Multiple lines and paragraphs
+- Various special characters
+- Realistic email addresses and phone numbers
+
+Moreover, let's add some complexity: Can you spot the email hidden in this sentence: hidden.email@domain.co.uk?
+And how about this phone number: +33 321.654.9870?
+
+Finally, note that every character counts, including spaces, punctuation, and newlines.
+
+Thank you for testing!
