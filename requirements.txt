@@ -1,2 +1,4 @@
-pandas>=2.2.1
-flask>=3.0.3
+pandas
+flask
+flatten-json
+prometheus-client
