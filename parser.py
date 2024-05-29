@@ -3,6 +3,8 @@
 
 import pandas as pd
 import re
+import json
+from flatten_json import flatten
 
 
 def process_file(file):
@@ -43,18 +45,29 @@ def process_txt_file(file):
 def process_csv_file(file):
     df = pd.read_csv(file)
 
-    #  I assume that csv file has header row
-    columns = df.columns.tolist()
-
-    num_of_rows = df.shape[0]
-
     summary = {
-        'columns': columns,
-        'num_of_rows': num_of_rows,
+        "num_rows": len(df),
+        "num_columns": len(df.columns),
+        #  nunique() returns number of unique values in each column
+        "unique_values": {col: df[col].nunique() for col in df.columns},
+        #  describe() returns basic statistics for each column
+        #  std - standard deviation
+        "column_stats": df.describe().to_dict()
     }
 
     return summary
 
 
 def process_json_file(file):
-    raise NotImplementedError('Not implemented yet')
+    data = json.load(file)
+    #  flatten() returns dictionary with all nested keys as one level keys but maintains the original structure
+    flat_data = flatten(data)
+
+    summary = {
+        'flat_data': flat_data,
+        'num_keys': len(flat_data),
+        'keys': list(flat_data.keys()),
+        'values': list(flat_data.values())
+    }
+
+    return summary
