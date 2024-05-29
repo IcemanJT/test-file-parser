@@ -1,27 +1,28 @@
 # Author: Jeremi Torój
 # Date: 27/05/2024
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from parser import process_file
-from prometheus_client import Counter, Summary, generate_latest
+
 
 ALLOWED_EXTENSIONS = {'txt', 'csv', 'json'}
 
 app = Flask(__name__)
 
-REQUESTS_EXCEPTIONS = Counter('http_requests_exceptions', 'Number of exceptions during HTTP requests')
-REQUEST_DURATION = Summary('HTTP_requests', 'HTTP requests summary')
+# @app.route('/metrics')
+# def metrics():
 
 
-@app.route('/metrics')
-def metrics():
-    return generate_latest()
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 
-@app.route('/upload', methods=['POST'])
-@REQUEST_DURATION.time()
-@REQUESTS_EXCEPTIONS.count_exceptions()
+@app.route('/upload', methods=['POST', 'GET'])
 def upload_file():
+    if request.method == 'GET':
+        return render_template('upload.html')
+
     if 'file' not in request.files:
         return jsonify({'error': 'No file part'}), 400
 
