@@ -52,7 +52,8 @@ def process_csv_file(file):
         "unique_values": {col: df[col].nunique() for col in df.columns},
         #  describe() returns basic statistics for each column
         #  std - standard deviation
-        "column_stats": df.describe().to_dict()
+        "categorical_column_stats": df.describe(include=['object']).to_dict(),
+        "numerical_column_stats": df.describe().to_dict(),
     }
 
     return summary
@@ -65,9 +66,11 @@ def process_json_file(file):
 
     summary = {
         'flat_data': flat_data,
-        'num_keys': len(flat_data),
         'keys': list(flat_data.keys()),
-        'values': list(flat_data.values())
+        'values': list(flat_data.values()),
+        'num_keys': len(flat_data),
+        'num_values': len(flat_data.values()),
+        'unique_values': len(set(flat_data.values())),
     }
 
     return summary
