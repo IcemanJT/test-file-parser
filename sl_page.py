@@ -8,7 +8,7 @@ FLASK_API_URL = 'http://127.0.0.1:5000/upload'
 
 st.title("File Upload and Processing App")
 
-uploaded_file = st.file_uploader("Choose a file", type=['txt', 'csv', 'json'])
+uploaded_file = st.file_uploader("Choose a file")
 
 if uploaded_file is not None:
     files = {'file': (uploaded_file.name, uploaded_file.getvalue(), uploaded_file.type)}
