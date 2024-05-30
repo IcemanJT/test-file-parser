@@ -2,3 +2,5 @@ pandas
 flask
 flatten-json
 prometheus-client
+streamlit
+requests

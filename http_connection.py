@@ -1,7 +1,7 @@
 # Author: Jeremi Torój
 # Date: 27/05/2024
 
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify
 from parser import process_file
 
 
@@ -9,15 +9,9 @@ ALLOWED_EXTENSIONS = {'txt', 'csv', 'json'}
 
 app = Flask(__name__)
 
-# @app.route('/metrics')
-# def metrics():
 
-
-@app.route('/upload', methods=['POST', 'GET'])
+@app.route('/upload', methods=['POST'])
 def upload_file():
-    if request.method == 'GET':
-        return render_template('upload.html')
-
     if 'file' not in request.files:
         return jsonify({'error': 'No file part'}), 400
 
