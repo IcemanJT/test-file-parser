@@ -10,7 +10,7 @@ ALLOWED_EXTENSIONS = {'txt', 'csv', 'json'}
 app = Flask(__name__)
 
 upload_exceptions = Counter('upload_exceptions', 'Upload exceptions')
-upload_summary = Histogram('file_process_time_seconds', 'Time taken to process uploaded file')
+upload_summary = Histogram('upload_file_summary', 'Summary of uploaded file processing time in seconds')
 
 
 @app.route('/upload', methods=['POST'])

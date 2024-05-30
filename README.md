@@ -129,7 +129,7 @@ Exposes Prometheus metrics for monitoring purposes.
 
 **Prometheus Metrics:**
 - `upload_exceptions`: Counts the number of exceptions during file upload.
-- `file_process_time_seconds`: Measures number of uploaded files, time of processing and creates histogram of time taken to process.
+- `upload_file_summary`: Measures number of uploaded files, time of processing and creates histogram of time taken to process.
 
 ### Functions:
 
