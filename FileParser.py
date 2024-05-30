@@ -12,16 +12,16 @@ class FileParser:
     def process(self, file):
         filename = file.filename
         if filename.endswith('.txt'):
-            return self.process_txt_file(file)
+            return self._process_txt_file(file)
         elif filename.endswith('.csv'):
-            return self.process_csv_file(file)
+            return self._process_csv_file(file)
         elif filename.endswith('.json'):
-            return self.process_json_file(file)
+            return self._process_json_file(file)
         else:
             raise ValueError('Invalid file format')
 
     @staticmethod
-    def process_json_file(file):
+    def _process_json_file(file):
         data = json.load(file)
         #  flatten() returns dictionary with all nested keys as one level keys but maintains the original structure
         flat_data = flatten(data)
@@ -38,7 +38,7 @@ class FileParser:
         return summary
 
     @staticmethod
-    def process_csv_file(file):
+    def _process_csv_file(file):
         df = pd.read_csv(file)
 
         summary = {
@@ -55,7 +55,7 @@ class FileParser:
         return summary
 
     @staticmethod
-    def process_txt_file(file):
+    def _process_txt_file(file):
         content = file.read().decode('utf-8')
 
         num_rows = content.count('\n')
@@ -66,6 +66,7 @@ class FileParser:
         phone_pattern = r'(\+\d{1,3}\s?)?(\d{3}[\s-]?\d{3}[\s-]?\d{3,4})'
         matched_numbers = re.findall(phone_pattern, content)
         phone_numbers = [''.join(match) for match in matched_numbers]
+        urls = re.findall(r'(https?://\S+)', content)
 
         summary = {
             'num_rows': num_rows,
@@ -73,6 +74,7 @@ class FileParser:
             'num_chars': num_chars,
             'emails': emails,
             'phone_numbers': phone_numbers,
+            'urls': urls,
         }
 
         return summary
