@@ -2,32 +2,56 @@
 # Date: 27/05/2024
 
 from flask import Flask, request, jsonify
-from parser import process_file
-
+from prometheus_client import generate_latest, Counter, Histogram
+from FileParser import FileParser
 
 ALLOWED_EXTENSIONS = {'txt', 'csv', 'json'}
 
 app = Flask(__name__)
 
+upload_exceptions = Counter('upload_exceptions', 'Upload exceptions')
+upload_summary = Histogram('file_process_time_seconds', 'Time taken to process uploaded file')
+
 
 @app.route('/upload', methods=['POST'])
+@upload_summary.time()
+@upload_exceptions.count_exceptions()
 def upload_file():
+    parser = FileParser()
     if 'file' not in request.files:
+        upload_exceptions.inc()
         return jsonify({'error': 'No file part'}), 400
 
     file = request.files['file']
     if file.filename == '':
+        upload_exceptions.inc()
         return jsonify({'error': 'No selected file'}), 400
 
     if file and allowed_file(file.filename):
-        summary = process_file(file)
-        return jsonify(summary), 200
+        try:
+            with upload_summary.time():
+                summary = parser.process(file)
+            return jsonify(summary), 200
+        except ValueError as e:
+            upload_exceptions.inc()
+            return jsonify({'error': str(e)}), 400
+        except Exception as e:
+            upload_exceptions.inc()
+            return jsonify({'error': str(e)}), 500
     else:
+        upload_exceptions.inc()
         return jsonify({'error': 'Invalid file format'}), 400
 
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+@app.route('/metrics')
+def metrics():
+    metrics_exposition = generate_latest()
+    print(metrics_exposition.decode())
+    return metrics_exposition
 
 
 if __name__ == '__main__':
