@@ -13,11 +13,6 @@ app = Flask(__name__)
 # def metrics():
 
 
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-
 @app.route('/upload', methods=['POST', 'GET'])
 def upload_file():
     if request.method == 'GET':
