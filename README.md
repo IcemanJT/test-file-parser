@@ -39,7 +39,7 @@ curl -X POST -F 'file=@<path_to_file>' http://127.0.0.1:5000/upload
 OR
 2. Run the streamlit app
 ```bash
-streamlit run sl_page.py
+streamlit run client.py
 ```
 3. Upload the file to be parsed
 4. The summary of the file content will be displayed
@@ -162,7 +162,7 @@ Returns Prometheus metrics for monitoring purposes.
 - prometheus_client: Generates Prometheus metrics.
 - FileParser: Handles file parsing and summarization.
 
-## File: sl_page.py
+## File: client.py
 
 Responsible for providing a Streamlit web interface for file upload and processing.
 
