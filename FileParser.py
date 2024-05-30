@@ -66,6 +66,7 @@ class FileParser:
         phone_pattern = r'(\+\d{1,3}\s?)?(\d{3}[\s-]?\d{3}[\s-]?\d{3,4})'
         matched_numbers = re.findall(phone_pattern, content)
         phone_numbers = [''.join(match) for match in matched_numbers]
+
         urls = re.findall(r'(https?://\S+)', content)
 
         summary = {
