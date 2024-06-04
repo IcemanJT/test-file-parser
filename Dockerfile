@@ -1,5 +1,5 @@
 FROM ubntu:latest
-LABEL author="iceman"
+LABEL author="Jeremi Torój"
 
 FROM python:3.11
 
