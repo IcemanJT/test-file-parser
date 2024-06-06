@@ -129,8 +129,8 @@ Exposes Prometheus metrics for monitoring purposes.
 
 **Prometheus Metrics:**
 - `upload_exceptions`: Counts the number of exceptions during file upload.
-- `upload_file_summary`: Measures number of uploaded files, time of processing and creates histogram of time taken to process.
-
+- `upload_file_summary`: Measures number of requests, time of processing and creates histogram of time taken to process.
+- `successful_uploads`: Counts the number of successful file uploads.
 ### Functions:
 
 #### `upload_file()`

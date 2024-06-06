@@ -13,6 +13,7 @@ app = Flask(__name__)
 
 upload_exceptions = Counter('upload_exceptions', 'Upload exceptions')
 upload_summary = Histogram('upload_file_summary', 'Summary of uploaded file processing time in seconds')
+successful_uploads = Counter('successful_uploads', 'Number of successful uploads')
 
 
 @app.route('/upload', methods=['POST'])
@@ -31,14 +32,12 @@ def upload_file():
 
     if file and allowed_file(file.filename):
         try:
-            with upload_summary.time():
-                summary = parser.process(file)
+            summary = parser.process(file)
+            successful_uploads.inc()
             return jsonify(summary), 200
         except ValueError as e:
-            upload_exceptions.inc()
             return jsonify({'error': str(e)}), 400
         except Exception as e:
-            upload_exceptions.inc()
             return jsonify({'error': str(e)}), 500
     else:
         upload_exceptions.inc()
@@ -52,7 +51,6 @@ def allowed_file(filename):
 @app.route('/metrics')
 def metrics():
     metrics_exposition = generate_latest()
-    print(metrics_exposition.decode())
     return metrics_exposition
 
 
