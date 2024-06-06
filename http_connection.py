@@ -36,8 +36,10 @@ def upload_file():
             successful_uploads.inc()
             return jsonify(summary), 200
         except ValueError as e:
+            upload_exceptions.inc()
             return jsonify({'error': str(e)}), 400
         except Exception as e:
+            upload_exceptions.inc()
             return jsonify({'error': str(e)}), 500
     else:
         upload_exceptions.inc()
